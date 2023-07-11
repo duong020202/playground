@@ -1,0 +1,13 @@
+name: Build
+on: [ push ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_REGISTRY: vesselosdev.azurecr.io
+      DOCKER_USERNAME: vesselosdev
+      IM_ARTIFACTORY_EMAIL_EXCUSE: noreply-github@wartsila.com
+      HELM_EXPERIMENTAL_OCI: 1
+    steps:
+      - name: run full process
+        uses: make run-full-process
