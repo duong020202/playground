@@ -27,6 +27,6 @@ docker-push:
 	docker push $(IMAGE)
 
 docker-run:
-	docker run -d -p 80:80 --name $(IMAGE) $(IMAGE)
+	docker run -d -p 80:80 --name myapp $(IMAGE)
 
 ####################################
