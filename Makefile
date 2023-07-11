@@ -13,21 +13,21 @@ DOCKER_REGISTRY ?= localhost:5000
 IMAGE ?= $(DOCKER_REGISTRY)/$(ARTIFACT):$(BUILD_VER)
 
 run-full-process:
-        docker-build
-        docker-run
-        curl http://localhost:80
+	docker-build
+	docker-run
+	curl http://localhost:80
 
 
 ####################################
 # DOCKER COMMANDS
 
 docker-build:
-	    docker build -t $(IMAGE) .
+	docker build -t $(IMAGE) .
 
 docker-push:
-	    docker push $(IMAGE)
+	docker push $(IMAGE)
 
 docker-run:
-        docker run -d -p 80:80 --name myapp myapp
+	docker run -d -p 80:80 --name myapp myapp
 
 ####################################
