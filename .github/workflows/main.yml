@@ -5,7 +5,7 @@ jobs:
     name: Build and push docker image
     runs-on: ubuntu-latest
     env:
-      DOCKER_REGISTRY: truongtuanduong
+      DOCKER_REGISTRY: registry.hub.docker.com
       DOCKER_USERNAME: "${{ secrets.DOCKER_REGISTRY_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
       IM_ARTIFACTORY_EMAIL_EXCUSE: noreply-github@wartsila.com
