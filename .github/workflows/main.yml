@@ -2,6 +2,7 @@ name: Build
 on: [ push ]
 jobs:
   build:
+    name: Build and push docker image
     runs-on: ubuntu-latest
     env:
       DOCKER_REGISTRY: truongtuanduong/playground
@@ -25,11 +26,20 @@ jobs:
         run: |
           make docker-test
 
-      - name: Run docker push
-        uses: docker/build-push-action@v3
+      - name: Set environment variables based on branch
+        run: |
+          BRANCH_NAME=${GITHUB_REF_NAME}
+          cat >> $GITHUB_ENV <<EOF
+          BUILD_NUMBER=${GITHUB_RUN_NUMBER}
+          BRANCH_NAME=${BRANCH_NAME}
+          EOF
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
-          username: DOCKER_USERNAME
-          password: DOCKER_PASSWORD
-          repository: DOCKER_REGISTRY
-          tags: latest, ${{ github.run_number }}
-          #.${{ github.head_ref }}.${{ github.sha }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Run docker push
+        run: |
+          make docker-push
