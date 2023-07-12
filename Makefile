@@ -8,11 +8,9 @@ BUILD_NUMBER ?= 9999
 PACKAGE_VERSION=$(shell jq -r .version my-app/package.json)
 BUILD_VER=${PACKAGE_VERSION}-${BRANCH_NAME}-${BUILD_NUMBER}-${HASH}
 DOCKER_REGISTRY ?= myapp
-# Skaffold will pass in the IMAGE variable and fails if docker has not
-# produced an image with that tag.
 IMAGE ?= $(DOCKER_REGISTRY)/$(ARTIFACT):$(BUILD_VER)
 
-run-full-process: docker-build docker-run docker-container-test
+run-full-process: docker-build docker-run docker-test
 
 ####################################
 # DOCKER COMMANDS
@@ -20,7 +18,7 @@ run-full-process: docker-build docker-run docker-container-test
 docker-build:
 	docker build -t $(IMAGE) .
 
-docker-container-test:
+docker-test:
 	curl http://localhost:80
 
 docker-push:

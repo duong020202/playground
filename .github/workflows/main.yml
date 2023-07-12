@@ -4,14 +4,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      DOCKER_REGISTRY: vesselosdev.azurecr.io
-      DOCKER_USERNAME: vesselosdev
+      DOCKER_REGISTRY: truongtuanduong/playground
+      DOCKER_USERNAME: "${{ secrets.DOCKER_REGISTRY_USERNAME }}"
+      DOCKER_PASSWORD: "${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
       IM_ARTIFACTORY_EMAIL_EXCUSE: noreply-github@wartsila.com
       HELM_EXPERIMENTAL_OCI: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: run full process
+      - name: Run docker build
         run: |
-          make run-full-process
+          make docker-build
+
+      - name: Run docker container
+        run: |
+          make docker-run
+
+      - name: Run docker test
+        run: |
+          make docker-test
+
+      - name: Run docker push
+        uses: docker/build-push-action@v3
+        with:
+          username: DOCKER_USERNAME
+          password: DOCKER_PASSWORD
+          repository: DOCKER_REGISTRY
+          tags: latest, ${{ github.run_number }}.${{ github.head_ref }}.${{ github.sha }}
