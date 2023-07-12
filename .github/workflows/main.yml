@@ -31,4 +31,5 @@ jobs:
           username: DOCKER_USERNAME
           password: DOCKER_PASSWORD
           repository: DOCKER_REGISTRY
-          tags: latest, ${{ github.run_number }}.${{ github.head_ref }}.${{ github.sha }}
+          tags: latest, ${{ github.run_number }}
+          #.${{ github.head_ref }}.${{ github.sha }}
