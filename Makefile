@@ -1,7 +1,7 @@
 .PHONY: *
 
 SHELL := bash
-ARTIFACT = myapp
+ARTIFACT ?= playground
 HASH = $(shell git rev-parse --short HEAD)
 BRANCH_NAME ?= local
 BUILD_NUMBER ?= 9999

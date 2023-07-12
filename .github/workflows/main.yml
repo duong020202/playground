@@ -5,9 +5,10 @@ jobs:
     name: Build and push docker image
     runs-on: ubuntu-latest
     env:
-      DOCKER_REGISTRY: registry.hub.docker.com
+      DOCKER_REGISTRY: registry.hub.docker.com/truongtuanduong
       DOCKER_USERNAME: "${{ secrets.DOCKER_REGISTRY_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
+      ARTIFACT: "playground"
       IM_ARTIFACTORY_EMAIL_EXCUSE: noreply-github@wartsila.com
       HELM_EXPERIMENTAL_OCI: 1
     steps:
