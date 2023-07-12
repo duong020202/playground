@@ -5,7 +5,7 @@ jobs:
     name: Build and push docker image
     runs-on: ubuntu-latest
     env:
-      DOCKER_REGISTRY: truongtuanduong/playground
+      DOCKER_REGISTRY: truongtuanduong
       DOCKER_USERNAME: "${{ secrets.DOCKER_REGISTRY_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
       IM_ARTIFACTORY_EMAIL_EXCUSE: noreply-github@wartsila.com
@@ -32,6 +32,7 @@ jobs:
           cat >> $GITHUB_ENV <<EOF
           BUILD_NUMBER=${GITHUB_RUN_NUMBER}
           BRANCH_NAME=${BRANCH_NAME}
+          REGISTRY=${DOCKER_REGISTRY}
           EOF
 
       - name: Log in to Docker Hub

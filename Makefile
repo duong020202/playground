@@ -7,8 +7,8 @@ BRANCH_NAME ?= local
 BUILD_NUMBER ?= 9999
 PACKAGE_VERSION=$(shell jq -r .version my-app/package.json)
 BUILD_VER=${PACKAGE_VERSION}-${BRANCH_NAME}-${BUILD_NUMBER}-${HASH}
-DOCKER_REGISTRY ?= myapp
-IMAGE ?= $(DOCKER_REGISTRY)/$(ARTIFACT):$(BUILD_VER)
+REGISTRY ?= playground
+IMAGE ?= $(REGISTRY)/$(ARTIFACT):$(BUILD_VER)
 
 run-full-process: docker-build docker-run docker-test
 
