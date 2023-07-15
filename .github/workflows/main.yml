@@ -5,7 +5,8 @@ jobs:
     name: Build and push docker image
     runs-on: ubuntu-latest
     env:
-      DOCKER_REGISTRY: "registry.hub.docker.com"
+#      DOCKER_REGISTRY: "registry.hub.docker.com"
+      DOCKER_REGISTRY: "truongtuanduong"
       DOCKER_USERNAME: "${{ secrets.DOCKER_REGISTRY_USERNAME }}"
       DOCKER_PASSWORD: "${{ secrets.DOCKER_REGISTRY_PASSWORD }}"
       ARTIFACT: "playground"
@@ -19,6 +20,7 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
+          # If it is Docker Hub, no need to provide hub registry URL, otherwise, registry address is required
 #          registry: "${{ env.DOCKER_REGISTRY }}"
           username: "${{ env.DOCKER_USERNAME }}"
           password: "${{ env.DOCKER_PASSWORD }}"
