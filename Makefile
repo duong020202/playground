@@ -27,4 +27,23 @@ docker-push:
 docker-run:
 	docker run -d -p 80:80 --name myapp $(IMAGE)
 
+format-code:
+	cd my-app && yarn prettier
+
+check-code-format:
+	cd my-app && yarn prettier-check
+
+install-dependencies:
+	cd my-app && yarn install
+
+# "yarn install" is not really necessary here if "install-dependencies" is scheduled to run in advance, which it is in this case
+yarn-build:
+	cd my-app && yarn install && CI=false yarn build
+
+test:
+	cd my-app && yarn tests
+
+test-all:
+	cd my-app && yarn test-all
+
 ####################################

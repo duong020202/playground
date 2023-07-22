@@ -17,6 +17,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: '3.7.1'
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Set up yarn
+        run: npm install -g yarn
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
@@ -24,6 +37,16 @@ jobs:
 #          registry: "${{ env.DOCKER_REGISTRY }}"
           username: "${{ env.DOCKER_USERNAME }}"
           password: "${{ env.DOCKER_PASSWORD }}"
+
+      - uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          key: ${{ runner.os }}-${{ hashFiles('*.lock') }}
+          path: |
+            my-app/build
+            my-app/node_modules
+          restore-keys:
+            ${{ runner.os }}-
 
       - name: Set environment variables based on branch
         run: |
@@ -33,6 +56,18 @@ jobs:
           BRANCH_NAME=${BRANCH_NAME}
           REGISTRY=${DOCKER_REGISTRY}
           EOF
+
+      - name: Yarn install dependencies
+        run: |
+          make install-dependencies
+
+      - name: Yarn check code format
+        run: |
+          make check-code-format
+
+      - name: Yarn build
+        run: |
+          make yarn-build
 
       - name: Run docker build
         run: |
